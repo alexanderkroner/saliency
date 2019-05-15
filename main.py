@@ -231,7 +231,7 @@ def main():
 
     parser.add_argument("-p", "--path", default=default_data_path,
                         help="specify the path where training data will be \
-                              downloaded or test data is stored")
+                              downloaded to or test data is stored")
 
     args = parser.parse_args()
 

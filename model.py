@@ -1,7 +1,8 @@
 import os
 
 import tensorflow as tf
-from tensorflow.python.tools import freeze_graph, optimize_for_inference_lib
+from tensorflow.python.tools import freeze_graph
+from tensorflow.tools.graph_transforms import TransformGraph
 
 import config
 import download
@@ -428,7 +429,7 @@ class MSINET:
             path (str): The path used for saving the model.
             device (str): Represents either "cpu" or "gpu".
 
-        .. seealso:: https://bit.ly/2VBBdqQ
+        .. seealso:: https://bit.ly/2VBBdqQ and https://bit.ly/2W7YqBa
         """
 
         model_name = "model_%s_%s" % (dataset, device)
@@ -449,9 +450,17 @@ class MSINET:
         with tf.gfile.Open(model_path + ".pb", "rb") as file:
             graph_def.ParseFromString(file.read())
 
-        graph_def = optimize_for_inference_lib.optimize_for_inference(graph_def,
-                                                                      ["input"],
-                                                                      ["output"],
-                                                                      tf.float32.as_datatype_enum)
-        with tf.gfile.FastGFile(model_path + ".pb", "w") as file:
-            file.write(graph_def.SerializeToString())
+        transforms = ["remove_nodes(op=Identity)",
+                      "merge_duplicate_nodes",
+                      "strip_unused_nodes",
+                      "fold_constants(ignore_errors=true)"]
+
+        optimized_graph_def = TransformGraph(graph_def,
+                                             ["input"],
+                                             ["output"],
+                                             transforms)
+
+        tf.train.write_graph(optimized_graph_def,
+                             logdir=path,
+                             as_text=False,
+                             name=model_name + ".pb")
