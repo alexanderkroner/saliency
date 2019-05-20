@@ -1,0 +1,42 @@
+<html>
+
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.1.2"></script>
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+  <header>
+    saliency prediction from your camera
+  </header>
+
+  <div id="error">
+    no camera was found
+  </div>
+
+  <div id="videos">
+    <video autoplay playsinline muted id="webcam"></video>
+    <canvas id="canvas"></canvas>
+  </div>
+
+  <form class="toggle">
+    <input id="very_low" name="states" type="radio" checked="">
+    <label for="very_low" onclick="">very low</label>
+
+    <input id="low" name="states" type="radio">
+    <label for="low" onclick="">low</label>
+
+    <input id="medium" name="states" type="radio">
+    <label for="medium" onclick="">medium</label>
+
+    <input id="high" name="states" type="radio">
+    <label for="high" onclick="">high</label>
+
+    <input id="very_high" name="states" type="radio">
+    <label for="very_high" onclick="">very high</label>
+  </form>
+
+  <script src="index.js"></script>
+</body>
+
+</html>
