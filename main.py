@@ -21,7 +21,7 @@ def define_paths(current_path, args):
 
     Args:
         current_path (str): The absolute path string of this script.
-        args (object): A namescpace object with values from command line.
+        args (object): A namespace object with values from command line.
 
     Returns:
         dict: A dictionary with all path elements.
