@@ -196,6 +196,246 @@ class CAT2000:
         return (train_set, valid_set)
 
 
+class DUTOMRON:
+    """This class represents the DUT-OMRON dataset. It consists of 5168 natural
+       images. The corresponding fixation maps were acquired from 5 observers
+       during free-viewing of images for 2 seconds. The largest dimension of
+       all stimuli is of size 401 pixels.
+
+    Attributes:
+        n_train: Assigned number of training instances (must sum to 850).
+        n_valid: Assigned number of validation instances (must sum to 850).
+
+    Returns:
+        tuple: A tuple that consists of dataset objects holding the training
+               and validation set instances respectively.
+
+    .. seealso:: C. Yang, L. Zhang, H. Lu, X. Ruan, M. H. Yang, Saliency detection
+                 via graph-based manifold ranking, Proceedings of the IEEE
+                 Conference on Computer Vision and Pattern Recognition (2013)
+                 3166-3173.
+    """
+
+    n_train = 4168
+    n_valid = 1000
+
+    def __init__(self, data_path):
+        self._target_size = config.DIMS["image_size_dutomron"]
+
+        self._dir_stimuli = data_path + "stimuli"
+        self._dir_saliency = data_path + "saliency"
+
+        if not os.path.exists(data_path):
+            parent_path = os.path.dirname(data_path[:-1])
+            parent_path = os.path.join(parent_path, "")
+
+            download.download_dutomron(parent_path)
+
+    def load_data(self):
+        list_x = _get_file_list(self._dir_stimuli)
+        list_y = _get_file_list(self._dir_saliency)
+
+        _check_consistency(zip(list_x, list_y), 5168)
+
+        indices = _get_random_indices(5168)
+        excerpt = indices[:self.n_train]
+
+        train_list_x = [list_x[idx] for idx in excerpt]
+        train_list_y = [list_y[idx] for idx in excerpt]
+
+        train_set = _fetch_dataset((train_list_x, train_list_y),
+                                   self._target_size, True)
+
+        excerpt = indices[self.n_train:]
+
+        valid_list_x = [list_x[idx] for idx in excerpt]
+        valid_list_y = [list_y[idx] for idx in excerpt]
+
+        valid_set = _fetch_dataset((valid_list_x, valid_list_y),
+                                   self._target_size, False)
+
+        return (train_set, valid_set)
+
+
+class PASCALS:
+    """This class represents the PASCAL-S dataset. It consists of 850 natural
+       images. The corresponding fixation maps were acquired from 8 observers
+       during free-viewing of images for 2 seconds. The largest dimension of
+       all stimuli is of size 500 pixels.
+
+    Attributes:
+        n_train: Assigned number of training instances (must sum to 850).
+        n_valid: Assigned number of validation instances (must sum to 850).
+
+    Returns:
+        tuple: A tuple that consists of dataset objects holding the training
+               and validation set instances respectively.
+
+    .. seealso:: Y. Li, X. Hou, C. Koch, J. M. Rehg, A. L. Yuille, The secrets
+                 of salient object segmentation, Proceedings of the IEEE
+                 Conference on Computer Vision and Pattern Recognition (2014)
+                 280-287.
+    """
+
+    n_train = 650
+    n_valid = 200
+
+    def __init__(self, data_path):
+        self._target_size = config.DIMS["image_size_pascals"]
+
+        self._dir_stimuli = data_path + "stimuli"
+        self._dir_saliency = data_path + "saliency"
+
+        if not os.path.exists(data_path):
+            parent_path = os.path.dirname(data_path[:-1])
+            parent_path = os.path.join(parent_path, "")
+
+            download.download_pascals(parent_path)
+
+    def load_data(self):
+        list_x = _get_file_list(self._dir_stimuli)
+        list_y = _get_file_list(self._dir_saliency)
+
+        _check_consistency(zip(list_x, list_y), 850)
+
+        indices = _get_random_indices(850)
+        excerpt = indices[:self.n_train]
+
+        train_list_x = [list_x[idx] for idx in excerpt]
+        train_list_y = [list_y[idx] for idx in excerpt]
+
+        train_set = _fetch_dataset((train_list_x, train_list_y),
+                                   self._target_size, True)
+
+        excerpt = indices[self.n_train:]
+
+        valid_list_x = [list_x[idx] for idx in excerpt]
+        valid_list_y = [list_y[idx] for idx in excerpt]
+
+        valid_set = _fetch_dataset((valid_list_x, valid_list_y),
+                                   self._target_size, False)
+
+        return (train_set, valid_set)
+
+
+class OSIE:
+    """This class represents the OSIE dataset. It consists of 700 natural
+       images. The corresponding fixation maps were acquired from 15 observers
+       during free-viewing of images for 3 seconds.  All stimuli are of size
+       600x800 pixels (height by width).
+
+    Attributes:
+        n_train: Assigned number of training instances (must sum to 700).
+        n_valid: Assigned number of validation instances (must sum to 700).
+
+    Returns:
+        tuple: A tuple that consists of dataset objects holding the training
+               and validation set instances respectively.
+
+    .. seealso:: J. Xu, M. Jiang, S. Wang, M. S. Kankanhalli, Q. Zhao, Predicting
+                 human gaze beyond pixels, Journal of Vision (2014).
+    """
+
+    n_train = 500
+    n_valid = 200
+
+    def __init__(self, data_path):
+        self._target_size = config.DIMS["image_size_osie"]
+
+        self._dir_stimuli = data_path + "stimuli"
+        self._dir_saliency = data_path + "saliency"
+
+        if not os.path.exists(data_path):
+            parent_path = os.path.dirname(data_path[:-1])
+            parent_path = os.path.join(parent_path, "")
+
+            download.download_osie(parent_path)
+
+    def load_data(self):
+        list_x = _get_file_list(self._dir_stimuli)
+        list_y = _get_file_list(self._dir_saliency)
+
+        _check_consistency(zip(list_x, list_y), 700)
+
+        indices = _get_random_indices(700)
+        excerpt = indices[:self.n_train]
+
+        train_list_x = [list_x[idx] for idx in excerpt]
+        train_list_y = [list_y[idx] for idx in excerpt]
+
+        train_set = _fetch_dataset((train_list_x, train_list_y),
+                                   self._target_size, True)
+
+        excerpt = indices[self.n_train:]
+
+        valid_list_x = [list_x[idx] for idx in excerpt]
+        valid_list_y = [list_y[idx] for idx in excerpt]
+
+        valid_set = _fetch_dataset((valid_list_x, valid_list_y),
+                                   self._target_size, False)
+
+        return (train_set, valid_set)
+
+
+class FIWI:
+    """This class represents the FIWI dataset. It consists of 149 webpage
+       screenshots. The corresponding fixation maps were acquired from 11
+       observers during free-viewing of images for 5 seconds. All stimuli
+       are either of size 768x1360 or 768x1366 pixels (height by width).
+
+    Attributes:
+        n_train: Assigned number of training instances (must sum to 149).
+        n_valid: Assigned number of validation instances (must sum to 149).
+
+    Returns:
+        tuple: A tuple that consists of dataset objects holding the training
+               and validation set instances respectively.
+
+    .. seealso:: C. Shen, Q. Zhao, Webpage Saliency, European Conference on
+                 Computer Vision (2014) 33-46.
+    """
+
+    n_train = 99
+    n_valid = 50
+
+    def __init__(self, data_path):
+        self._target_size = config.DIMS["image_size_fiwi"]
+
+        self._dir_stimuli = data_path + "stimuli"
+        self._dir_saliency = data_path + "saliency"
+
+        if not os.path.exists(data_path):
+            parent_path = os.path.dirname(data_path[:-1])
+            parent_path = os.path.join(parent_path, "")
+
+            download.download_fiwi(parent_path)
+
+    def load_data(self):
+        list_x = _get_file_list(self._dir_stimuli)
+        list_y = _get_file_list(self._dir_saliency)
+
+        _check_consistency(zip(list_x, list_y), 149)
+
+        indices = _get_random_indices(149)
+        excerpt = indices[:self.n_train]
+
+        train_list_x = [list_x[idx] for idx in excerpt]
+        train_list_y = [list_y[idx] for idx in excerpt]
+
+        train_set = _fetch_dataset((train_list_x, train_list_y),
+                                   self._target_size, True)
+
+        excerpt = indices[self.n_train:]
+
+        valid_list_x = [list_x[idx] for idx in excerpt]
+        valid_list_y = [list_y[idx] for idx in excerpt]
+
+        valid_set = _fetch_dataset((valid_list_x, valid_list_y),
+                                   self._target_size, False)
+
+        return (train_set, valid_set)
+
+
 class TEST:
     """This class represents test set instances used for inference through
        a trained network. All stimuli are resized to the preferred spatial

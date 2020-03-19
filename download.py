@@ -1,8 +1,14 @@
+import io
 import os
-import urllib.request
 import zipfile
+from urllib.request import urlretrieve
 
+import h5py
+import numpy as np
 import requests
+from matplotlib.pyplot import imread, imsave
+from scipy.io import loadmat
+from scipy.ndimage import gaussian_filter
 
 
 def download_salicon(data_path):
@@ -82,7 +88,7 @@ def download_mit1003(data_path):
     os.makedirs(saliency_path, exist_ok=True)
 
     url = "https://people.csail.mit.edu/tjudd/WherePeopleLook/ALLSTIMULI.zip"
-    urllib.request.urlretrieve(url, data_path + "tmp.zip")
+    urlretrieve(url, data_path + "tmp.zip")
 
     with zipfile.ZipFile(data_path + "tmp.zip", "r") as zip_ref:
         for file in zip_ref.namelist():
@@ -94,24 +100,26 @@ def download_mit1003(data_path):
                     stimulus.write(zip_ref.read(file))
 
     url = "https://people.csail.mit.edu/tjudd/WherePeopleLook/ALLFIXATIONMAPS.zip"
-    urllib.request.urlretrieve(url, data_path + "tmp.zip")
+    urlretrieve(url, data_path + "tmp.zip")
 
     with zipfile.ZipFile(data_path + "tmp.zip", "r") as zip_ref:
         for file in zip_ref.namelist():
+            file_name = os.path.split(file)[1]
+
             if file.endswith("Pts.jpg"):
-                file_name = os.path.split(file)[1]
+                file_path = fixations_path + file_name
 
                 # this file is mistakenly included in the dataset and can be ignored
                 if file_name == "i05june05_static_street_boston_p1010764fixPts.jpg":
                     continue
 
-                with open(fixations_path + file_name, "wb") as fixations:
+                with open(file_path, "wb") as fixations:
                     fixations.write(zip_ref.read(file))
 
             elif file.endswith("Map.jpg"):
-                file_name = os.path.split(file)[1]
+                file_path = saliency_path + file_name
 
-                with open(saliency_path + file_name, "wb") as saliency:
+                with open(file_path, "wb") as saliency:
                     saliency.write(zip_ref.read(file))
 
     os.remove(data_path + "tmp.zip")
@@ -136,7 +144,7 @@ def download_cat2000(data_path):
     os.makedirs(data_path, exist_ok=True)
 
     url = "http://saliency.mit.edu/trainSet.zip"
-    urllib.request.urlretrieve(url, data_path + "tmp.zip")
+    urlretrieve(url, data_path + "tmp.zip")
 
     with zipfile.ZipFile(data_path + "tmp.zip", "r") as zip_ref:
         for file in zip_ref.namelist():
@@ -148,6 +156,263 @@ def download_cat2000(data_path):
     os.rename(default_path + "Stimuli", default_path + "stimuli")
     os.rename(default_path + "FIXATIONLOCS", default_path + "fixations")
     os.rename(default_path + "FIXATIONMAPS", default_path + "saliency")
+
+    os.remove(data_path + "tmp.zip")
+
+    print("done!", flush=True)
+
+
+def download_dutomron(data_path):
+    """Downloads the DUT-OMRON dataset. Three folders are then created that
+       contain the stimuli, binary fixation maps, and blurred saliency
+       distributions respectively.
+
+    Args:
+        data_path (str): Defines the path where the dataset will be
+                         downloaded and extracted to.
+    """
+
+    print(">> Downloading DUTOMRON dataset...", end="", flush=True)
+
+    default_path = data_path + "dutomron/"
+    stimuli_path = default_path + "stimuli/"
+    fixations_path = default_path + "fixations/"
+    saliency_path = default_path + "saliency/"
+
+    os.makedirs(stimuli_path, exist_ok=True)
+    os.makedirs(fixations_path, exist_ok=True)
+    os.makedirs(saliency_path, exist_ok=True)
+
+    url = "http://saliencydetection.net/dut-omron/download/DUT-OMRON-image.zip"
+    urlretrieve(url, data_path + "tmp.zip")
+
+    with zipfile.ZipFile(data_path + "tmp.zip", "r") as zip_ref:
+        for file in zip_ref.namelist():
+            if file.endswith(".jpg") and not "._" in file:
+                file_name = os.path.basename(file)
+                file_path = stimuli_path + file_name
+
+                with open(file_path, "wb") as stimulus:
+                    stimulus.write(zip_ref.read(file))
+
+    url = "http://saliencydetection.net/dut-omron/download/DUT-OMRON-eye-fixations.zip"
+    urlretrieve(url, data_path + "tmp.zip")
+
+    with zipfile.ZipFile(data_path + "tmp.zip", "r") as zip_ref:
+        for file in zip_ref.namelist():
+            if file.endswith(".mat") and not "._" in file:
+                file_name = os.path.basename(file)
+                file_name = os.path.splitext(file_name)[0] + ".png"
+
+                loaded_zip = io.BytesIO(zip_ref.read(file))
+
+                fixations = loadmat(loaded_zip)["s"]
+                sorted_idx = fixations[:, 2].argsort()
+                fixations = fixations[sorted_idx]
+
+                size = fixations[0, :2]
+
+                fixations_map = np.zeros((size[1], size[0]))
+
+                fixations_map[fixations[1:, 1],
+                              fixations[1:, 0]] = 1
+
+                saliency_map = gaussian_filter(fixations_map, 16)
+
+                imsave(saliency_path + file_name, saliency_map, cmap="gray")
+                imsave(fixations_path + file_name, fixations_map, cmap="gray")
+
+    os.remove(data_path + "tmp.zip")
+
+    print("done!", flush=True) 
+
+
+def download_pascals(data_path):
+    """Downloads the PASCAL-S dataset. Three folders are then created that
+       contain the stimuli, binary fixation maps, and blurred saliency
+       distributions respectively.
+
+    Args:
+        data_path (str): Defines the path where the dataset will be
+                         downloaded and extracted to.
+    """
+
+    print(">> Downloading PASCALS dataset...", end="", flush=True)
+
+    default_path = data_path + "pascals/"
+    stimuli_path = default_path + "stimuli/"
+    fixations_path = default_path + "fixations/"
+    saliency_path = default_path + "saliency/"
+
+    os.makedirs(stimuli_path, exist_ok=True)
+    os.makedirs(fixations_path, exist_ok=True)
+    os.makedirs(saliency_path, exist_ok=True)
+
+    url = "http://cbs.ic.gatech.edu/salobj/download/salObj.zip"
+    urlretrieve(url, data_path + "tmp.zip")
+
+    with zipfile.ZipFile(data_path + "tmp.zip", "r") as zip_ref:
+        for file in zip_ref.namelist():
+            file_name = os.path.basename(file)
+
+            if file.endswith(".jpg") and "imgs/pascal" in file:
+                file_path = stimuli_path + file_name
+
+                with open(file_path, "wb") as stimulus:
+                    stimulus.write(zip_ref.read(file))
+
+            elif file.endswith(".png") and "pascal/humanFix" in file:
+                file_path = saliency_path + file_name
+
+                with open(file_path, "wb") as saliency:
+                    saliency.write(zip_ref.read(file))
+
+            elif "pascalFix.mat" in file:
+                loaded_zip = io.BytesIO(zip_ref.read(file))
+
+                with h5py.File(loaded_zip, "r") as f:
+                    fixations = np.array(f.get("fixCell"))[0]
+
+                    fixations_list = []
+
+                    for reference in fixations:
+                        obj = np.array(f[reference])
+                        obj = np.stack((obj[0], obj[1]), axis=-1)
+                        fixations_list.append(obj)
+
+            elif "pascalSize.mat" in file:
+                loaded_zip = io.BytesIO(zip_ref.read(file))
+
+                with h5py.File(loaded_zip, "r") as f:
+                    sizes = np.array(f.get("sizeData"))
+                    sizes = np.transpose(sizes, (1, 0))
+
+    for idx, value in enumerate(fixations_list):
+        size = [int(x) for x in sizes[idx]]
+        fixations_map = np.zeros(size)
+
+        for fixation in value:
+            fixations_map[int(fixation[0]) - 1,
+                          int(fixation[1]) - 1] = 1
+
+        file_name = str(idx + 1) + ".png"
+        file_path = fixations_path + file_name
+
+        imsave(file_path, fixations_map, cmap="gray")
+
+    os.remove(data_path + "tmp.zip")
+
+    print("done!", flush=True)    
+
+
+def download_osie(data_path):
+    """Downloads the OSIE dataset. Three folders are then created that
+       contain the stimuli, binary fixation maps, and blurred saliency
+       distributions respectively.
+
+    Args:
+        data_path (str): Defines the path where the dataset will be
+                         downloaded and extracted to.
+    """
+
+    print(">> Downloading OSIE dataset...", end="", flush=True)
+
+    default_path = data_path + "osie/"
+    stimuli_path = default_path + "stimuli/"
+    fixations_path = default_path + "fixations/"
+    saliency_path = default_path + "saliency/"
+
+    os.makedirs(stimuli_path, exist_ok=True)
+    os.makedirs(fixations_path, exist_ok=True)
+    os.makedirs(saliency_path, exist_ok=True)
+
+    url = "https://github.com/NUS-VIP/predicting-human-gaze-beyond-pixels/archive/master.zip"
+    urlretrieve(url, data_path + "tmp.zip")
+
+    with zipfile.ZipFile(data_path + "tmp.zip", "r") as zip_ref:
+        for file in zip_ref.namelist():
+            file_name = os.path.basename(file)
+
+            if file.endswith(".jpg") and "data/stimuli" in file:
+                file_path = stimuli_path + file_name
+
+                with open(file_path, "wb") as stimulus:
+                    stimulus.write(zip_ref.read(file))
+
+            elif file_name == "fixations.mat":
+                loaded_zip = io.BytesIO(zip_ref.read(file))
+
+                loaded_mat = loadmat(loaded_zip)["fixations"]
+
+                for idx, value in enumerate(loaded_mat):
+                    subjects = value[0][0][0][1]
+
+                    fixations_map = np.zeros((600, 800))
+
+                    for subject in subjects:
+                        x_vals = subject[0][0][0][0][0]
+                        y_vals = subject[0][0][0][1][0]
+
+                        fixations = np.stack((y_vals, x_vals), axis=-1)
+                        fixations = fixations.astype(int)
+
+                        fixations_map[fixations[:, 0],
+                                      fixations[:, 1]] = 1
+
+                    file_name = str(1001 + idx) + ".png"
+
+                    saliency_map = gaussian_filter(fixations_map, 16)
+                    
+                    imsave(saliency_path + file_name, saliency_map, cmap="gray")
+                    imsave(fixations_path + file_name, fixations_map, cmap="gray")
+    
+    os.remove(data_path + "tmp.zip")
+
+    print("done!", flush=True)
+
+
+def download_fiwi(data_path):
+    """Downloads the FIWI dataset. Three folders are then created that
+       contain the stimuli, binary fixation maps, and blurred saliency
+       distributions respectively.
+
+    Args:
+        data_path (str): Defines the path where the dataset will be
+                         downloaded and extracted to.
+    """
+
+    print(">> Downloading FIWI dataset...", end="", flush=True)
+
+    default_path = data_path + "fiwi/"
+    stimuli_path = default_path + "stimuli/"
+    fixations_path = default_path + "fixations/"
+    saliency_path = default_path + "saliency/"
+
+    os.makedirs(stimuli_path, exist_ok=True)
+    os.makedirs(fixations_path, exist_ok=True)
+    os.makedirs(saliency_path, exist_ok=True)
+
+    url = "https://www.dropbox.com/s/30nxg2uwd1wpb80/webpage_dataset.zip?dl=1"
+    urlretrieve(url, data_path + "tmp.zip")
+
+    with zipfile.ZipFile(data_path + "tmp.zip", "r") as zip_ref:
+        for file in zip_ref.namelist():
+            file_name = os.path.basename(file)
+
+            if file.endswith(".png") and "stimuli" in file:
+                file_path = stimuli_path + file_name
+
+                with open(file_path, "wb") as stimulus:
+                    stimulus.write(zip_ref.read(file))
+
+            elif file.endswith(".png") and "all5" in file:
+                loaded_zip = io.BytesIO(zip_ref.read(file))
+
+                fixations = imread(loaded_zip)
+                saliency = gaussian_filter(fixations, 30)
+
+                imsave(saliency_path + file_name, saliency, cmap="gray")
+                imsave(fixations_path + file_name, fixations, cmap="gray")
 
     os.remove(data_path + "tmp.zip")
 
