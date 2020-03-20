@@ -25,6 +25,7 @@ Our results on the MIT saliency benchmark can be viewed [here](http://saliency.m
 | tensorflow | 1.13.1  |
 | matplotlib | 3.0.3   |
 | requests   | 2.21.0  |
+| scipy      | 1.4.1   |
 
 The code was tested and is compatible with both Windows and Linux. We strongly recommend to use *TensorFlow* with GPU acceleration, especially when training the model. Nevertheless, a slower CPU version is officially supported.
 
