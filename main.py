@@ -217,8 +217,8 @@ def main():
 
     phases_list = ["train", "test"]
 
-    datasets_list = ["salicon", "mit1003", "cat2000", "dutomron",
-                     "pascals", "osie", "fiwi"]
+    datasets_list = ["salicon", "mit1003", "cat2000",
+                     "dutomron", "pascals", "osie", "fiwi"]
 
     parser = argparse.ArgumentParser(
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)

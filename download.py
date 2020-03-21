@@ -444,7 +444,15 @@ def download_pretrained_weights(data_path, key):
         "model_mit1003_cpu": "1jsESjYtsTvkMqKftA4rdstfB7mSYw5Ec",
         "model_mit1003_gpu": "1P_tWxBl3igZlzcHGp5H3T3kzsOskWeG6",
         "model_cat2000_cpu": "1XxaEx7xxD6rHasQTa-VY7T7eVpGhMxuV",
-        "model_cat2000_gpu": "1T6ChEGB6Mf02gKXrENjdeD6XXJkE_jHh"
+        "model_cat2000_gpu": "1T6ChEGB6Mf02gKXrENjdeD6XXJkE_jHh",
+        "model_dutomron_cpu": "14tuRZpKi8LMDKRHNVUylu6RuAaXLjHTa",
+        "model_dutomron_gpu": "15LG_M45fpYC1pTwnwmArNTZw_Z3BOIA-",
+        "model_pascals_cpu": "1af9IvBqFamKWx64Ror6ALivuKNioOVIf",
+        "model_pascals_gpu": "1C-T-RQzX2SaiY9Nw1HmaSx6syyCt01Z0",
+        "model_osie_cpu": "1JD1tvAqZGxj_gEGmIfoxb9dTe5HOaHj1",
+        "model_osie_gpu": "1g8UPr1hGpUdOSWerRb751pZqiWBOZOCh",
+        "model_fiwi_cpu": "19qj9nAjd5gVHLB71oRn_YfYDw5n4Uf2X",
+        "model_fiwi_gpu": "12OpIMIi2IyDVaxkE2d37XO9uUsSYf1Ec"
     }
 
     url = "https://drive.google.com/uc?id=" + ids[key] + "&export=download"
