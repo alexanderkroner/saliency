@@ -43,7 +43,7 @@ This will start the training procedure for the SALICON dataset with the hyperpar
 python main.py train -d DATA -p PATH
 ```
 
-Here, the `DATA` argument must be `salicon`, `mit1003`, or `cat2000`. It is required that the model is first trained on the SALICON dataset before fine-tuning it on either MIT1003 or CAT2000. By default, the selected saliency dataset will be downloaded to the folder `data/` but you can point to a different directory via the `PATH` argument.
+Here, the `DATA` argument must be `salicon`, `mit1003`, `cat2000`, `dutomron`, `pascals`, `osie`, or `fiwi`. It is required that the model is first trained on the SALICON dataset before fine-tuning it on any of the other ones. By default, the selected saliency dataset will be downloaded to the folder `data/` but you can point to a different directory via the `PATH` argument.
 
 All results are then stored under the folder `results/`, which contains the training history and model checkpoints. This allows to continue training or perform inference on test instances, as described in the next section.
 
@@ -55,7 +55,7 @@ To test a pre-trained model on image data and produce saliency maps, execute the
 python main.py test -d DATA -p PATH
 ```
 
-If no checkpoint is available from prior training, it will automatically download our pre-trained model to `weights/`. The `DATA` argument defines which network is used and must be `salicon`, `mit1003`, or `cat2000`. It will then resize the input images to the dimensions specified in the configurations file. Note that this might lead to excessive image padding depending on the selected dataset.
+If no checkpoint is available from prior training, it will automatically download our pre-trained model to `weights/`. The `DATA` argument defines which network is used and must be `salicon`, `mit1003`, `cat2000`, `dutomron`, `pascals`, `osie`, or `fiwi`. It will then resize the input images to the dimensions specified in the configurations file. Note that this might lead to excessive image padding depending on the selected dataset.
 
 The `PATH` argument points to the folder where the test data is stored but can also denote a single image file directly. As for network training, the `device` value can be changed to CPU in the configurations file. This ensures that the model optimized for CPU will be utilized and hence improves the inference speed. All results are finally stored in the folder `results/images/` with the original image dimensions.
 
