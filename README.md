@@ -9,9 +9,28 @@
 
 This repository contains the official *TensorFlow* implementation of the MSI-Net (multi-scale information network), as described in the Neural Networks paper [Contextual encoder-decoder network for visual saliency prediction](https://www.sciencedirect.com/science/article/pii/S0893608020301660) (2020) and on [arXiv](https://arxiv.org/abs/1902.06634).
 
-**_Abstract:_** *Predicting salient regions in natural images requires the detection of objects that are present in a scene. To develop robust representations for this challenging task, high-level visual features at multiple spatial scales must be extracted and augmented with contextual information. However, existing models aimed at explaining human fixation maps do not incorporate such a mechanism explicitly. Here we propose an approach based on a convolutional neural network pre-trained on a large-scale image classification task. The architecture forms an encoder-decoder structure and includes a module with multiple convolutional layers at different dilation rates to capture multi-scale features in parallel. Moreover, we combine the resulting representations with global scene information for accurately predicting visual saliency. Our model achieves competitive results on two public saliency benchmarks and we demonstrate the effectiveness of the suggested approach on selected examples. The network is based on a lightweight image classification backbone and hence presents a suitable choice for applications with limited computational resources to estimate human fixations across complex natural scenes.*
+**_Abstract:_** *Predicting salient regions in natural images requires the detection of objects that are present in a scene. To develop robust representations for this challenging task, high-level visual features at multiple spatial scales must be extracted and augmented with contextual information. However, existing models aimed at explaining human fixation maps do not incorporate such a mechanism explicitly. Here we propose an approach based on a convolutional neural network pre-trained on a large-scale image classification task. The architecture forms an encoder-decoder structure and includes a module with multiple convolutional layers at different dilation rates to capture multi-scale features in parallel. Moreover, we combine the resulting representations with global scene information for accurately predicting visual saliency. Our model achieves competitive and consistent results across multiple evaluation metrics on two public saliency benchmarks and we demonstrate the effectiveness of the suggested approach on five datasets and selected examples. Compared to state of the art approaches, the network is based on a lightweight image classification backbone and hence presents a suitable choice for applications with limited computational resources, such as (virtual) robotic systems, to estimate human fixations across complex natural scenes.*
 
 Our results on the MIT saliency benchmark can be viewed [here](http://saliency.mit.edu).
+
+## Reference
+
+If you use this code in your research, please cite the following paper:
+
+```
+@article{kroner2020contextual,
+  title={Contextual encoder-decoder network for visual saliency prediction},
+  author={Kroner, Alexander and Senden, Mario and Driessens, Kurt and Goebel, Rainer},
+  url={http://www.sciencedirect.com/science/article/pii/S0893608020301660},
+  doi={https://doi.org/10.1016/j.neunet.2020.05.004},
+  journal={Neural Networks},
+  publisher={Elsevier},
+  year={2020},
+  volume={129},
+  pages={261--270},
+  issn={0893-6080}
+}
+```
 
 ## Architecture
 
