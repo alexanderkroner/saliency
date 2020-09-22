@@ -34,8 +34,8 @@ def download_salicon(data_path):
     os.makedirs(saliency_path, exist_ok=True)
 
     ids = ["1g8j-hTT-51IG1UFwP0xTGhLdgIUCW5e5",
-           "0B2hsWbciDVedS1lBZHprdXFoZkU",
-           "0B2hsWbciDVedNWJZMlRxeW1PY1U"]
+           "1P-jeZXCsjoKO79OhFUgnj6FGcyvmLDPj",
+           "1PnO7szbdub1559LfjYHMy65EDC4VhJC8"]
 
     urls = ["https://drive.google.com/uc?id=" +
             i + "&export=download" for i in ids]
