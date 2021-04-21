@@ -1,7 +1,6 @@
 import io
 import os
 import zipfile
-from urllib.request import urlretrieve
 
 import h5py
 import numpy as np
@@ -88,7 +87,9 @@ def download_mit1003(data_path):
     os.makedirs(saliency_path, exist_ok=True)
 
     url = "https://people.csail.mit.edu/tjudd/WherePeopleLook/ALLSTIMULI.zip"
-    urlretrieve(url, data_path + "tmp.zip")
+
+    with open(data_path + "tmp.zip", "wb") as f:
+        f.write(requests.get(url).content)
 
     with zipfile.ZipFile(data_path + "tmp.zip", "r") as zip_ref:
         for file in zip_ref.namelist():
@@ -100,7 +101,9 @@ def download_mit1003(data_path):
                     stimulus.write(zip_ref.read(file))
 
     url = "https://people.csail.mit.edu/tjudd/WherePeopleLook/ALLFIXATIONMAPS.zip"
-    urlretrieve(url, data_path + "tmp.zip")
+
+    with open(data_path + "tmp.zip", "wb") as f:
+        f.write(requests.get(url).content)
 
     with zipfile.ZipFile(data_path + "tmp.zip", "r") as zip_ref:
         for file in zip_ref.namelist():
@@ -144,7 +147,9 @@ def download_cat2000(data_path):
     os.makedirs(data_path, exist_ok=True)
 
     url = "http://saliency.mit.edu/trainSet.zip"
-    urlretrieve(url, data_path + "tmp.zip")
+
+    with open(data_path + "tmp.zip", "wb") as f:
+        f.write(requests.get(url).content)
 
     with zipfile.ZipFile(data_path + "tmp.zip", "r") as zip_ref:
         for file in zip_ref.namelist():
@@ -184,7 +189,9 @@ def download_dutomron(data_path):
     os.makedirs(saliency_path, exist_ok=True)
 
     url = "http://saliencydetection.net/dut-omron/download/DUT-OMRON-image.zip"
-    urlretrieve(url, data_path + "tmp.zip")
+
+    with open(data_path + "tmp.zip", "wb") as f:
+        f.write(requests.get(url).content)
 
     with zipfile.ZipFile(data_path + "tmp.zip", "r") as zip_ref:
         for file in zip_ref.namelist():
@@ -196,7 +203,9 @@ def download_dutomron(data_path):
                     stimulus.write(zip_ref.read(file))
 
     url = "http://saliencydetection.net/dut-omron/download/DUT-OMRON-eye-fixations.zip"
-    urlretrieve(url, data_path + "tmp.zip")
+
+    with open(data_path + "tmp.zip", "wb") as f:
+        f.write(requests.get(url).content)
 
     with zipfile.ZipFile(data_path + "tmp.zip", "r") as zip_ref:
         for file in zip_ref.namelist():
@@ -224,7 +233,7 @@ def download_dutomron(data_path):
 
     os.remove(data_path + "tmp.zip")
 
-    print("done!", flush=True) 
+    print("done!", flush=True)
 
 
 def download_pascals(data_path):
@@ -249,7 +258,9 @@ def download_pascals(data_path):
     os.makedirs(saliency_path, exist_ok=True)
 
     url = "http://cbs.ic.gatech.edu/salobj/download/salObj.zip"
-    urlretrieve(url, data_path + "tmp.zip")
+
+    with open(data_path + "tmp.zip", "wb") as f:
+        f.write(requests.get(url).content)
 
     with zipfile.ZipFile(data_path + "tmp.zip", "r") as zip_ref:
         for file in zip_ref.namelist():
@@ -302,7 +313,7 @@ def download_pascals(data_path):
 
     os.remove(data_path + "tmp.zip")
 
-    print("done!", flush=True)    
+    print("done!", flush=True)
 
 
 def download_osie(data_path):
@@ -327,7 +338,9 @@ def download_osie(data_path):
     os.makedirs(saliency_path, exist_ok=True)
 
     url = "https://github.com/NUS-VIP/predicting-human-gaze-beyond-pixels/archive/master.zip"
-    urlretrieve(url, data_path + "tmp.zip")
+
+    with open(data_path + "tmp.zip", "wb") as f:
+        f.write(requests.get(url).content)
 
     with zipfile.ZipFile(data_path + "tmp.zip", "r") as zip_ref:
         for file in zip_ref.namelist():
@@ -362,10 +375,10 @@ def download_osie(data_path):
                     file_name = str(1001 + idx) + ".png"
 
                     saliency_map = gaussian_filter(fixations_map, 16)
-                    
+
                     imsave(saliency_path + file_name, saliency_map, cmap="gray")
                     imsave(fixations_path + file_name, fixations_map, cmap="gray")
-    
+
     os.remove(data_path + "tmp.zip")
 
     print("done!", flush=True)
@@ -393,7 +406,9 @@ def download_fiwi(data_path):
     os.makedirs(saliency_path, exist_ok=True)
 
     url = "https://www.dropbox.com/s/30nxg2uwd1wpb80/webpage_dataset.zip?dl=1"
-    urlretrieve(url, data_path + "tmp.zip")
+
+    with open(data_path + "tmp.zip", "wb") as f:
+        f.write(requests.get(url).content)
 
     with zipfile.ZipFile(data_path + "tmp.zip", "r") as zip_ref:
         for file in zip_ref.namelist():
