@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+preferred-citation:
+  type: article
+  authors:
+  - family-names: "Kroner"
+    given-names: "Alexander"
+    orcid: "https://orcid.org/0000-0001-8139-0095"
+  - family-names: "Senden"
+    given-names: "Mario"
+    orcid: "https://orcid.org/0000-0002-5598-6167"
+  - family-names: "Driessens"
+    given-names: "Kurt"
+    orcid: "https://orcid.org/0000-0001-7871-2495"
+  - family-names: "Goebel"
+    given-names: "Rainer"
+    orcid: "https://orcid.org/0000-0003-1780-2467"
+  title: "Contextual encoder–decoder network for visual saliency prediction"
+  doi: "10.1016/j.neunet.2020.05.004"
+  journal: "Neural Networks"
+  start: 261
+  end: 270
+  volume: 129
+  year: 2020
