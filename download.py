@@ -2,6 +2,7 @@ import io
 import os
 import zipfile
 
+import gdown
 import h5py
 import numpy as np
 import requests
@@ -41,17 +42,8 @@ def download_salicon(data_path):
 
     save_paths = [default_path, fixations_path, saliency_path]
 
-    session = requests.Session()
-
     for count, url in enumerate(urls):
-        response = session.get(url, params={"id": id}, stream=True)
-        token = _get_confirm_token(response)
-
-        if token:
-            params = {"id": id, "confirm": token}
-            response = session.get(url, params=params, stream=True)
-
-        _save_response_content(response, data_path + "tmp.zip")
+        gdown.download(url, data_path + "tmp.zip", quiet=True)
 
         with zipfile.ZipFile(data_path + "tmp.zip", "r") as zip_ref:
             for file in zip_ref.namelist():
@@ -195,7 +187,7 @@ def download_dutomron(data_path):
 
     with zipfile.ZipFile(data_path + "tmp.zip", "r") as zip_ref:
         for file in zip_ref.namelist():
-            if file.endswith(".jpg") and not "._" in file:
+            if file.endswith(".jpg") and "._" not in file:
                 file_name = os.path.basename(file)
                 file_path = stimuli_path + file_name
 
@@ -209,7 +201,7 @@ def download_dutomron(data_path):
 
     with zipfile.ZipFile(data_path + "tmp.zip", "r") as zip_ref:
         for file in zip_ref.namelist():
-            if file.endswith(".mat") and not "._" in file:
+            if file.endswith(".mat") and "._" not in file:
                 file_name = os.path.basename(file)
                 file_name = os.path.splitext(file_name)[0] + ".png"
 
@@ -472,16 +464,7 @@ def download_pretrained_weights(data_path, key):
 
     url = "https://drive.google.com/uc?id=" + ids[key] + "&export=download"
 
-    session = requests.Session()
-
-    response = session.get(url, params={"id": id}, stream=True)
-    token = _get_confirm_token(response)
-
-    if token:
-        params = {"id": id, "confirm": token}
-        response = session.get(url, params=params, stream=True)
-
-    _save_response_content(response, data_path + "tmp.zip")
+    gdown.download(url, data_path + "tmp.zip", quiet=True)
 
     with zipfile.ZipFile(data_path + "tmp.zip", "r") as zip_ref:
         for file in zip_ref.namelist():
@@ -490,20 +473,3 @@ def download_pretrained_weights(data_path, key):
     os.remove(data_path + "tmp.zip")
 
     print("done!", flush=True)
-
-
-def _get_confirm_token(response):
-    for key, value in response.cookies.items():
-        if key.startswith("download_warning"):
-            return value
-
-    return None
-
-
-def _save_response_content(response, file_path):
-    chunk_size = 32768
-
-    with open(file_path, "wb") as data:
-        for chunk in response.iter_content(chunk_size):
-            if chunk:
-                data.write(chunk)
