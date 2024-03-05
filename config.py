@@ -13,7 +13,7 @@ PARAMS = {
     "device": "gpu"
 }
 
-"""The predefined input image sizes for each of the 3 datasets.
+"""The predefined input image sizes for each of the 7 datasets.
    To reproduce the results from the paper, these values should
    not be changed. They must be divisible by 8 due to the model's
    downsampling operations. Furthermore, all pretrained models
