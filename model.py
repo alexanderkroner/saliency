@@ -377,8 +377,8 @@ class MSINET:
     def restore(self, sess, dataset, paths, device):
         """This function allows continued training from a prior checkpoint and
            training from scratch with the pretrained VGG16 weights. In case the
-           dataset is either CAT2000 or MIT1003, a prior checkpoint based on
-           the SALICON dataset is required.
+           desired dataset is not SALICON, a prior checkpoint based on the
+           SALICON dataset is required.
 
         Args:
             sess (object): The current TF training session.
