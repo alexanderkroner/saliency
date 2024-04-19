@@ -8,25 +8,6 @@ This repository contains the official **TensorFlow** implementation of the **MSI
 
 Our results are available on the original [MIT saliency benchmark](http://saliency.mit.edu/results.html) and the updated [MIT/Tübingen saliency benchmark](https://saliency.tuebingen.ai/results.html). The latter are derived from a probabilistic version of our model with metric-specific postprocessing for a fair model comparison.
 
-## Reference
-
-If you use this code in your research, please cite the following paper:
-
-```
-@article{kroner2020contextual,
-  title={Contextual encoder-decoder network for visual saliency prediction},
-  author={Kroner, Alexander and Senden, Mario and Driessens, Kurt and Goebel, Rainer},
-  url={http://www.sciencedirect.com/science/article/pii/S0893608020301660},
-  doi={https://doi.org/10.1016/j.neunet.2020.05.004},
-  journal={Neural Networks},
-  publisher={Elsevier},
-  year={2020},
-  volume={129},
-  pages={261--270},
-  issn={0893-6080}
-}
-```
-
 ## Architecture
 
 <img src="./figures/architecture.jpg" width="700"/>
@@ -77,11 +58,30 @@ The `PATH` argument points to the folder where the test data is stored but can a
 
 <img src="./figures/webcam.gif" width="750"/>
 
-A demonstration of saliency prediction in the browser is available [here](https://storage.googleapis.com/msi-net/demo/index.html). It computes saliency maps based on the input from a webcam via *TensorFlow.js*. Since the library uses the machine's hardware, model performance is dependent on your local configuration. The buttons allow you to select the quality, ranging from *very low* for a version trained on low image resolution with high inference speed, to *very high* for a version trained on high image resolution with slow inference speed.
+A demonstration of saliency prediction in the browser is available [here](https://storage.googleapis.com/msi-net/demo/index.html). It computes saliency maps based on the input from a webcam via **TensorFlow.js**. Since the library uses the machine's hardware, model performance is dependent on your local configuration. The buttons allow you to select the quality, ranging from *very low* for a version trained on low image resolution with high inference speed, to *very high* for a version trained on high image resolution with slow inference speed.
 
 <img src="./figures/huggingface.jpg" width="750"/>
 
 Another demonstration to predict where humans fixate on an image can be found on [HuggingFace Spaces](https://huggingface.co/spaces/alexanderkroner/saliency). Upload an image file, take a snapshot from your webcam, or paste an image from the clipboard to compute the saliency map and download the results.
+
+## Reference
+
+If you use this code or model in your research, please cite the following paper:
+
+```
+@article{kroner2020contextual,
+  title={Contextual encoder-decoder network for visual saliency prediction},
+  author={Kroner, Alexander and Senden, Mario and Driessens, Kurt and Goebel, Rainer},
+  url={http://www.sciencedirect.com/science/article/pii/S0893608020301660},
+  doi={https://doi.org/10.1016/j.neunet.2020.05.004},
+  journal={Neural Networks},
+  publisher={Elsevier},
+  year={2020},
+  volume={129},
+  pages={261--270},
+  issn={0893-6080}
+}
+```
 
 ## Contact
 
