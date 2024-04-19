@@ -1,0 +1,12 @@
+name: saliency
+
+dependencies:
+  - python=3.6.8
+  - pip=21.2.2
+
+  - pip:
+      - gdown==4.6.3
+      - matplotlib==3.0.3
+      - requests==2.21.0
+      - scipy==1.4.1
+      - tensorflow-gpu==1.13.1

@@ -1,13 +1,8 @@
 # Contextual Encoder-Decoder Network <br/> for Visual Saliency Prediction
 
-![](https://img.shields.io/badge/python-v3.6.8-orange.svg?style=flat-square)
-![](https://img.shields.io/badge/tensorflow-v1.13.1-orange.svg?style=flat-square)
-![](https://img.shields.io/badge/matplotlib-v3.0.3-orange.svg?style=flat-square)
-![](https://img.shields.io/badge/requests-v2.21.0-orange.svg?style=flat-square)
-
 <img src="./figures/results.jpg" width="800"/>
 
-This repository contains the official *TensorFlow* implementation of the MSI-Net (multi-scale information network), as described in the Neural Networks paper [Contextual encoder-decoder network for visual saliency prediction](https://www.sciencedirect.com/science/article/pii/S0893608020301660) (2020) and on [arXiv](https://arxiv.org/abs/1902.06634).
+This repository contains the official **TensorFlow** implementation of the **MSI-Net** (multi-scale information network), as described in the Neural Networks paper [Contextual encoder-decoder network for visual saliency prediction](https://www.sciencedirect.com/science/article/pii/S0893608020301660) (2020) and on [arXiv](https://arxiv.org/abs/1902.06634).
 
 **_Abstract:_** *Predicting salient regions in natural images requires the detection of objects that are present in a scene. To develop robust representations for this challenging task, high-level visual features at multiple spatial scales must be extracted and augmented with contextual information. However, existing models aimed at explaining human fixation maps do not incorporate such a mechanism explicitly. Here we propose an approach based on a convolutional neural network pre-trained on a large-scale image classification task. The architecture forms an encoder-decoder structure and includes a module with multiple convolutional layers at different dilation rates to capture multi-scale features in parallel. Moreover, we combine the resulting representations with global scene information for accurately predicting visual saliency. Our model achieves competitive and consistent results across multiple evaluation metrics on two public saliency benchmarks and we demonstrate the effectiveness of the suggested approach on five datasets and selected examples. Compared to state of the art approaches, the network is based on a lightweight image classification backbone and hence presents a suitable choice for applications with limited computational resources, such as (virtual) robotic systems, to estimate human fixations across complex natural scenes.*
 
@@ -38,16 +33,15 @@ If you use this code in your research, please cite the following paper:
 
 ## Requirements
 
-| Package    | Version |
-|:----------:|:-------:|
-| python     | 3.6.8   |
-| tensorflow | 1.13.1  |
-| matplotlib | 3.0.3   |
-| requests   | 2.21.0  |
-| gdown      | 4.6.3   |
-| scipy      | 1.4.1   |
+[![](https://img.shields.io/badge/tensorflow--gpu-v1.13.1-orange.svg?style=flat-square)](https://www.tensorflow.org/)
 
-The code was tested and is compatible with both Windows and Linux. We strongly recommend to use *TensorFlow* with GPU acceleration, especially when training the model. Nevertheless, a slower CPU version is officially supported.
+The code is based on **Python v3.6.8** and **TensorFlow v1.13.1** and is compatible with both Windows and Linux. We strongly recommend to use TensorFlow with GPU acceleration, especially when training the model. Nevertheless, a slower CPU version is officially supported. To install the required dependencies, use either `pip` or `conda`:
+```
+pip install -r requirements.txt
+```
+```
+conda env create -f requirements.yml
+```
 
 ## Training
 
