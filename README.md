@@ -81,9 +81,13 @@ The `PATH` argument points to the folder where the test data is stored but can a
 
 ## Demo
 
-<img src="./demo/demo.gif" width="750"/>
+<img src="./figures/webcam.gif" width="750"/>
 
 A demonstration of saliency prediction in the browser is available [here](https://storage.googleapis.com/msi-net/demo/index.html). It computes saliency maps based on the input from a webcam via *TensorFlow.js*. Since the library uses the machine's hardware, model performance is dependent on your local configuration. The buttons allow you to select the quality, ranging from *very low* for a version trained on low image resolution with high inference speed, to *very high* for a version trained on high image resolution with slow inference speed.
+
+<img src="./figures/huggingface.jpg" width="750"/>
+
+Another demonstration to predict where humans fixate on an image can be found on [HuggingFace Spaces](https://huggingface.co/spaces/alexanderkroner/saliency). Upload an image file, take a snapshot from your webcam, or paste an image from the clipboard to compute the saliency map and download the results.
 
 ## Contact
 
