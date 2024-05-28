@@ -55,6 +55,36 @@ If no checkpoint is available from prior training, it will automatically downloa
 
 The `PATH` argument points to the folder where the test data is stored but can also denote a single image file directly. As for network training, the `device` value can be changed to CPU in the configurations file. This ensures that the model optimized for CPU will be utilized and hence improves the inference speed. All results are finally stored in the folder `results/images/` with the original image dimensions.
 
+## Hub Version
+
+[![](https://img.shields.io/badge/tensorflow-v2.15.0-orange.svg?style=flat-square)](https://www.tensorflow.org/)
+
+A version of the model trained on SALICON was converted to **TensorFlow v2.15.0** and made available on [TensorFlow Hub](https://www.kaggle.com/models/alexanderkroner/msi-net) and [HuggingFace Hub](https://huggingface.co/alexanderkroner/MSI-Net). To load the model from one of the platforms, run the following code snippet:
+
+<details>
+  <summary>TensorFlow Hub</summary>
+  
+  ```python
+  from tensorflow_hub import load
+
+  model = load("https://www.kaggle.com/models/alexanderkroner/msi-net/tensorFlow2/salicon/1").signatures["serving_default"]
+  ```
+
+</details>
+
+<details>
+  <summary>HuggingFace Hub</summary>
+  
+  ```python
+  from huggingface_hub import from_pretrained_keras
+
+  model = from_pretrained_keras("alexanderkroner/MSI-Net")
+  ```
+
+</details>
+
+For more information on the example usage of the loaded model, please refer to the guides on [Kaggle](https://www.kaggle.com/models/alexanderkroner/msi-net/tensorFlow2/salicon/1#example-use) and [HuggingFace](https://huggingface.co/alexanderkroner/MSI-Net#example-use). A code notebook for the former can be found [here](https://www.kaggle.com/code/alexanderkroner/visual-saliency-prediction).
+
 ## Demo
 
 <img src="./figures/webcam.gif" width="750"/>
