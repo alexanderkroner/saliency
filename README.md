@@ -59,10 +59,10 @@ The `PATH` argument points to the folder where the test data is stored but can a
 
 [![](https://img.shields.io/badge/tensorflow-v2.15.0-orange.svg?style=flat-square)](https://www.tensorflow.org/)
 
-A version of the model trained on SALICON was converted to **TensorFlow v2.15.0** and made available on [TensorFlow Hub](https://www.kaggle.com/models/alexanderkroner/msi-net) and [HuggingFace Hub](https://huggingface.co/alexanderkroner/MSI-Net). To load the model from one of the platforms, run the following code snippet:
+A version of the model trained on SALICON was converted to **TensorFlow v2.15.0** and made available on [Kaggle Hub](https://www.kaggle.com/models/alexanderkroner/msi-net) and [HuggingFace Hub](https://huggingface.co/alexanderkroner/MSI-Net). To load the model from one of the platforms, run the following code snippet:
 
 <details>
-  <summary>TensorFlow Hub</summary>
+  <summary>Kaggle Hub</summary>
   
   ```python
   from tensorflow_hub import load
@@ -83,7 +83,7 @@ A version of the model trained on SALICON was converted to **TensorFlow v2.15.0*
 
 </details>
 
-For more information on the example usage of the loaded model, please refer to the guides on [Kaggle](https://www.kaggle.com/models/alexanderkroner/msi-net/tensorFlow2/salicon/1#example-use) and [HuggingFace](https://huggingface.co/alexanderkroner/MSI-Net#example-use). A code notebook for the former can be found [here](https://www.kaggle.com/code/alexanderkroner/visual-saliency-prediction).
+For more information on the example usage of the loaded model for predicting saliency from an image, please refer to the guides on [Kaggle](https://www.kaggle.com/models/alexanderkroner/msi-net/tensorFlow2/salicon/1#example-use) and [HuggingFace](https://huggingface.co/alexanderkroner/MSI-Net#example-use). A code notebook for the former can be found [here](https://www.kaggle.com/code/alexanderkroner/visual-saliency-prediction).
 
 ## Demo
 
