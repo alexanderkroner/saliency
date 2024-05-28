@@ -23,6 +23,7 @@ pip install -r requirements.txt
 ```
 conda env create -f requirements.yml
 ```
+For newer GPUs, you may need to install [nvidia-tensorflow](https://github.com/NVIDIA/tensorflow) to successfully run the scripts (see issues [#25](https://github.com/alexanderkroner/saliency/issues/25) and [#26](https://github.com/alexanderkroner/saliency/issues/26)).
 
 ## Training
 
